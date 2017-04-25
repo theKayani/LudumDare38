@@ -3,7 +3,13 @@ package com.hk.globe;
 import java.awt.Color;
 import java.awt.EventQueue;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
 import com.hk.globe.screen.SplashScreen;
+import com.sun.glass.events.KeyEvent;
 
 import main.G2D;
 import main.Game;
@@ -17,7 +23,7 @@ import main.Main;
  * the source of that is needed, let me know.
  * It's pretty simple anyways.
  * 
- * @author Wati999
+ * @author Wati888
  */
 public class LDGame extends Game
 {
@@ -30,12 +36,15 @@ public class LDGame extends Game
 	 * The current screen being rendered.
 	 */
 	private Screen currScreen;
+	private boolean musicOn = false;
+	private final Clip themeSong;
 	
 	public LDGame()
 	{
-		// Set the current screen to the splash screen.
 		setScreen(new SplashScreen(this));
-//		setScreen(new GameScreen(this));
+		
+		themeSong = getThemeSong();
+		setMusicOn(true);
 	}
 
 	/**
@@ -55,6 +64,42 @@ public class LDGame extends Game
 	public void paint(G2D g2d)
 	{
 		currScreen.paintScreen(g2d);
+	}
+	
+	public void setMusicOn(boolean musicOn)
+	{
+		if(this.musicOn != musicOn)
+		{
+			this.musicOn = musicOn;
+		
+			if(musicOn)
+			{
+				themeSong.start();
+			}
+			else
+			{
+				themeSong.stop();
+			}
+		}
+	}
+	
+	private Clip getThemeSong()
+	{
+		try
+		{
+			AudioInputStream ais = AudioSystem.getAudioInputStream(LDGame.class.getResource("/audio/theme_song.wav"));
+			Clip c = AudioSystem.getClip();
+			c.open(ais);
+			FloatControl fc = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
+			fc.setValue(-20F);
+			c.loop(Clip.LOOP_CONTINUOUSLY);
+			
+			return c;
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException(e);
+		}
 	}
 	
 	/**
@@ -84,7 +129,17 @@ public class LDGame extends Game
 
 	public void key(int key, char keyChar, boolean pressed)
 	{
-		currScreen.key(key, keyChar, pressed);
+		if(key == KeyEvent.VK_M)
+		{
+			if(!pressed)
+			{
+				setMusicOn(!musicOn);
+			}
+		}
+		else
+		{
+			currScreen.key(key, keyChar, pressed);
+		}
 	}
 	
 	/**

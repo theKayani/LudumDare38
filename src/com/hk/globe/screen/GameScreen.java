@@ -152,7 +152,7 @@ public class GameScreen extends Screen
 		}
 
 		int w = 800;
-		int h = 400;
+		int h = 200;
 		int x = Main.WIDTH / 2 - w / 2;
 		int y = Main.HEIGHT / 2 - h / 2;
 			
@@ -160,12 +160,12 @@ public class GameScreen extends Screen
 		
 		Rectangle resumeButton = new Rectangle(360, 100);
 		resumeButton.x = x + w / 2 - 200;
-		resumeButton.y = y + h - 70;
+		resumeButton.y = y + h / 2;
 		pauseButtons[0] = resumeButton;
 		
 		Rectangle exitButton = new Rectangle(360, 100);
 		exitButton.x = x + w - 200;
-		exitButton.y = y + h - 70;
+		exitButton.y = y + h / 2;
 		pauseButtons[1] = exitButton;
 
 		for(Rectangle r : pauseButtons)
@@ -503,7 +503,6 @@ public class GameScreen extends Screen
 		
 		g2d.setFontSize(28F);
 		g2d.setColor(Color.RED);
-		g2d.drawString(getEnemyPower(), 5, g2d.height - 30);
 		g2d.drawString((nextGlobe / 60 == 0 ? "Next Attack: Now!" : "Next Attack: " + (nextGlobe / 60)), 5, g2d.height - 5);
 		g2d.setColor(Color.BLUE);
 		g2d.drawString("Wave: " + difficulty, 210, 30);
@@ -515,7 +514,7 @@ public class GameScreen extends Screen
 			g2d.drawRectangle(0, 0, g2d.width, g2d.height + 1);
 
 			int w = 800;
-			int h = 400;
+			int h = paused ? 200 : 400;
 			int x = Main.WIDTH / 2 - w / 2;
 			int y = Main.HEIGHT / 2 - h / 2;
 			g2d.clearRect(x, y, w, h);

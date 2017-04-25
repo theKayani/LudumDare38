@@ -113,6 +113,9 @@ public class MenuScreen extends Screen
 		g2d.setColor(Color.CYAN);
 		g2d.drawString("Snowglobe", g2d.width / 2, g2d.height * 1 / 6);
 		g2d.disable(G2D.G_CENTER);
+		g2d.setFontSize(24F);
+		g2d.setColor(Color.BLACK);
+		g2d.drawString("Press 'M' anywhere to toggle the music", 5, g2d.height - 5);
 		
 		globeA.paintGlobe(g2d);
 		globeB.paintGlobe(g2d);

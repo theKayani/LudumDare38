@@ -74,31 +74,23 @@ public abstract class WalkingSoldier extends Soldier
 			}
 		}
 		
-		//walk(0);
-		if((onGlobe.left == null || onGlobe.left.tower.getHealth() <= 0) && (onGlobe.right == null || onGlobe.right.tower.getHealth() <= 0))
+		walk(0);
+		if(onGlobe.left == null && onGlobe.right == null)
 		{
 			moveTo(onGlobe.pos.x + backX, onGlobe.pos.y, 20);
 			return;
 		}
 		
 		Globe attackGlobe = null;
-		if(onGlobe.left != null || onGlobe.right != null)
+		if(onGlobe.left != null)
 		{
-			if(onGlobe.left != null && pos.x - onGlobe.pos.x < 0)
-			{
-				attackGlobe = onGlobe.left;
-			}
-			else if(onGlobe.right != null && pos.x - onGlobe.pos.x > 0)
-			{
-				attackGlobe = onGlobe.right;
-			}
-			else if(onGlobe.left != null && onGlobe.right != null)
-			{
-				attackGlobe = Rand.nextBoolean() ? onGlobe.right : onGlobe.left;
-			}
+			attackGlobe = onGlobe.left;
 		}
-		attackGlobe = attackGlobe != null && attackGlobe.friendly != onGlobe.friendly ? attackGlobe : null;
-		walk(0);
+		else if(onGlobe.right != null)
+		{
+			attackGlobe = onGlobe.right;
+		}
+//		attackGlobe = attackGlobe != null && attackGlobe.friendly != onGlobe.friendly ? attackGlobe : null;
 		if(attackGlobe != null)
 		{
 			if(attackGlobe.tower.getHealth() <= 0)

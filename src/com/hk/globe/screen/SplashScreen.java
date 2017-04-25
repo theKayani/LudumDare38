@@ -28,7 +28,7 @@ public class SplashScreen extends Screen
 		{
 			start = time;
 		}
-		else if(time - start > 200)
+		else if(time - start > 1000)
 		{
 			game.setScreen(new MenuScreen(game));
 		}
